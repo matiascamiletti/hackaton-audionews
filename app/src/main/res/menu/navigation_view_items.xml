@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:id="@+id/group_one" android:checkableBehavior="all">
+        <item
+            android:id="@+id/menu_home"
+            android:icon="@android:drawable/ic_lock_idle_lock"
+            android:title="Inicio"
+            />
+        <item
+            android:id="@+id/menu_stats"
+            android:icon="@android:drawable/ic_media_next"
+            android:title="Seciones" />
+    </group>
+</menu>
