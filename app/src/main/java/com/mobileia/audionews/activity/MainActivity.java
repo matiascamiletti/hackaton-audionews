@@ -15,6 +15,8 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.mobileia.audionews.R;
+import com.mobileia.audionews.fragment.NewsFragment;
+import com.mobileia.audionews.library.MCSpeech;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,14 +29,18 @@ public class MainActivity extends AppCompatActivity {
 
     protected NavigationView mNavigationView;
 
+    protected MCSpeech mSpeech;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        initFragment(savedInstanceState);
         initNavigationView();
         initToolbar();
         initFloatingButton();
+        initTextToSpeech();
     }
 
     private void initNavigationView(){
@@ -75,10 +81,33 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mSpeech.speak("Probando la aplicacion, por favor funciona loca!");
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
+    }
+
+    private void initFragment(Bundle savedInstanceState){
+        if (savedInstanceState == null) {
+            NewsFragment f = NewsFragment.newInstance("", "");
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.container, f)
+                    .commit();
+        }
+    }
+
+    private void initTextToSpeech(){
+        mSpeech = new MCSpeech();
+        mSpeech.init(this);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(mSpeech != null){
+            mSpeech.onActivityResult(requestCode, resultCode, data);
+        }
     }
 
     @Override
