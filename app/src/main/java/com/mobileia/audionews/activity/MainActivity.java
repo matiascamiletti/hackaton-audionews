@@ -70,9 +70,10 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         // Hide title
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setLogo(R.drawable.navigationbar_logo);
         // Set button menu
         getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(android.R.drawable.ic_menu_add);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_dehaze_black);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
@@ -99,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initTextToSpeech(){
         mSpeech = new MCSpeech();
-        mSpeech.init(this);
+        //mSpeech.init(this);
     }
 
     @Override
