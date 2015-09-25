@@ -9,5 +9,6 @@ public class LNNews {
     public String title;
     public String category;
     public String image;
+    public boolean isSpeeching = false;
 
 }

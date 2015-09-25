@@ -1,6 +1,7 @@
 package com.mobileia.audionews.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.koushikdutta.ion.Ion;
@@ -61,11 +63,20 @@ public class NewsAdapter extends BaseAdapter {
             view = LayoutInflater.from(this.mContext).inflate(R.layout.item_news, parent, false);
         }
 
+        RelativeLayout container = ViewHolder.get(view, R.id.container);
         ImageView imageView = ViewHolder.get(view, R.id.info_image);
         TextView titleView = ViewHolder.get(view, R.id.info_title);
         TextView categoryView = ViewHolder.get(view, R.id.info_category);
 
         final LNNews post = getItem(position);
+
+        if(post.isSpeeching){
+            container.setBackgroundResource(R.color.colorAccent);
+            categoryView.setTextColor(Color.WHITE);
+        }else{
+            container.setBackgroundResource(android.R.color.white);
+            categoryView.setTextColor(mContext.getResources().getColor(R.color.colorAccent));
+        }
 
         titleView.setText(post.title);
         categoryView.setText(post.category);

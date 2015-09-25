@@ -13,11 +13,16 @@ import android.widget.Toast;
 @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
 public class MCUtteranceListener extends UtteranceProgressListener implements TextToSpeech.OnUtteranceCompletedListener {
 
+    private MCSpeechListener mListener = null;
+
     public void onEnd(String utteranceId){
-        if (utteranceId == "END_ID") {
+        //if (utteranceId == "END_ID") {
             // Callback ya termino de hablar el texto ingresado.
-        }
+        //}
         //Toast.makeText(mContext, "Ya termino de reproducir.", Toast.LENGTH_SHORT).show();
+        if(mListener != null){
+            mListener.onComplete(utteranceId);
+        }
     }
 
     @Override
@@ -38,5 +43,9 @@ public class MCUtteranceListener extends UtteranceProgressListener implements Te
     @Override
     public void onUtteranceCompleted(String utteranceId) {
         onEnd(utteranceId);
+    }
+
+    public void setListener(MCSpeechListener listener){
+        mListener = listener;
     }
 }

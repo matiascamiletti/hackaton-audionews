@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -41,6 +42,12 @@ public class MainActivity extends AppCompatActivity {
         initToolbar();
         initFloatingButton();
         initTextToSpeech();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mSpeech.stop();
     }
 
     private void initNavigationView(){
@@ -82,9 +89,9 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mSpeech.speak("Probando la aplicacion, por favor funciona loca!");
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                startAllSpeech();
+                //mSpeech.speak("Probando la aplicacion, por favor funciona loca!");
+                //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
             }
         });
     }
@@ -98,9 +105,16 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void startAllSpeech(){
+        Fragment f = getSupportFragmentManager().findFragmentById(R.id.container);
+        if(NewsFragment.class.isInstance(f)){
+            ((NewsFragment)f).startSpeech(mSpeech);
+        }
+    }
+
     private void initTextToSpeech(){
         mSpeech = new MCSpeech();
-        //mSpeech.init(this);
+        mSpeech.init(this);
     }
 
     @Override

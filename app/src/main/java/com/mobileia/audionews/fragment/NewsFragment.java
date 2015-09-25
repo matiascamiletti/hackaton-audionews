@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import com.mobileia.audionews.R;
 import com.mobileia.audionews.adapter.NewsAdapter;
+import com.mobileia.audionews.library.MCSpeech;
+import com.mobileia.audionews.library.MCSpeechListener;
 import com.mobileia.audionews.model.LNNews;
 import com.mobileia.audionews.service.LaNacion;
 import com.mobileia.audionews.service.ServiceListener;
@@ -51,6 +53,8 @@ public class NewsFragment extends Fragment implements AbsListView.OnItemClickLis
      */
     private NewsAdapter mAdapter;
 
+    private int mPositionSpeech = 0;
+
     // TODO: Rename and change types of parameters
     public static NewsFragment newInstance(String param1, String param2) {
         NewsFragment fragment = new NewsFragment();
@@ -79,7 +83,7 @@ public class NewsFragment extends Fragment implements AbsListView.OnItemClickLis
 
         // TODO: Change Adapter to display your content
         mAdapter = new NewsAdapter(getActivity());
-        LaNacion.getLastNews(getActivity(), new ServiceListener(){
+        LaNacion.getLastNews(getActivity(), new ServiceListener() {
             @Override
             public void onComplete(List<LNNews> list) {
                 mAdapter.setList(list);
@@ -143,6 +147,54 @@ public class NewsFragment extends Fragment implements AbsListView.OnItemClickLis
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         public void onFragmentInteraction(String id);
+    }
+
+    public void startSpeech(MCSpeech speech){
+        if(mPositionSpeech > 0){
+            LNNews old = mAdapter.getList().get(mPositionSpeech-1);
+            old.isSpeeching = false;
+        }
+        mPositionSpeech = 0;
+        nextSpeech(speech);
+    }
+
+    private void nextSpeech(final MCSpeech speech){
+        if(mPositionSpeech > 0){
+            LNNews old = mAdapter.getList().get(mPositionSpeech-1);
+            old.isSpeeching = false;
+            updateItemAtPosition(mPositionSpeech-1);
+        }
+
+        final LNNews n = mAdapter.getList().get(mPositionSpeech);
+        speech.speak(n.category, String.valueOf(n.identifier) + "b", null);
+        speech.speak(n.title, String.valueOf(n.identifier), new MCSpeechListener() {
+            @Override
+            public void onComplete(String utteranceId) {
+
+                if(utteranceId.compareTo(String.valueOf(n.identifier)) != 0){
+                    return;
+                }
+
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mPositionSpeech++;
+                        nextSpeech(speech);
+                    }
+                });
+
+            }
+        });
+        n.isSpeeching = true;
+
+        updateItemAtPosition(mPositionSpeech);
+    }
+
+
+    private void updateItemAtPosition(int position) {
+        int visiblePosition = mListView.getFirstVisiblePosition();
+        View view = mListView.getChildAt(position - visiblePosition);
+        mListView.getAdapter().getView(position, view, mListView);
     }
 
 }

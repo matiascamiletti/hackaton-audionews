@@ -36,9 +36,15 @@ public class MCSpeech implements TextToSpeech.OnInitListener {
         mUtteranceListener = new MCUtteranceListener();
     }
 
+    private void initTTS(){
+        mTTS = new TextToSpeech(mContext, this);
+        configureParameters();
+    }
+
     private void checkTTS(){
         SharedPreferences prefs = mContext.getSharedPreferences("mc_speech", Context.MODE_PRIVATE);
         if(prefs.getInt("check_tts", 0) != 0){
+            initTTS();
             return;
         }
 
@@ -59,7 +65,7 @@ public class MCSpeech implements TextToSpeech.OnInitListener {
         }
 
         mProperties.put(TextToSpeech.Engine.KEY_PARAM_STREAM, String.valueOf(AudioManager.STREAM_ALARM));
-        mProperties.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "END_ID");
+        //mProperties.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "END_ID");
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data){
@@ -68,8 +74,7 @@ public class MCSpeech implements TextToSpeech.OnInitListener {
         }
 
         if(resultCode == TextToSpeech.Engine.CHECK_VOICE_DATA_PASS){
-            mTTS = new TextToSpeech(mContext, this);
-            configureParameters();
+            initTTS();
         }else{
             Intent install = new Intent();
             install.setAction(TextToSpeech.Engine.ACTION_INSTALL_TTS_DATA);
@@ -92,13 +97,22 @@ public class MCSpeech implements TextToSpeech.OnInitListener {
         }
     }
 
-    public void speak(String text){
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
-            mTTS.speak(text, TextToSpeech.QUEUE_FLUSH, new Bundle(), "END_ID");
-        }else{
-            mTTS.speak(text, TextToSpeech.QUEUE_FLUSH, mProperties);
+    public void speak(String text, String uid, MCSpeechListener listener){
+        if(listener != null){
+            mUtteranceListener.setListener(listener);
         }
 
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+            mTTS.setOnUtteranceProgressListener(mUtteranceListener);
+            mTTS.speak(text, TextToSpeech.QUEUE_ADD, new Bundle(), uid);
+        } else {
+            mProperties.remove(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID);
+            mProperties.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, uid);
+            mTTS.speak(text, TextToSpeech.QUEUE_ADD, mProperties);
+        }
     }
 
+    public void stop(){
+        mTTS.stop();
+    }
 }
