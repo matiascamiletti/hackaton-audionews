@@ -3,6 +3,7 @@ package com.mobileia.audionews.library;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -36,9 +37,18 @@ public class MCSpeech implements TextToSpeech.OnInitListener {
     }
 
     private void checkTTS(){
+        SharedPreferences prefs = mContext.getSharedPreferences("mc_speech", Context.MODE_PRIVATE);
+        if(prefs.getInt("check_tts", 0) != 0){
+            return;
+        }
+
         Intent check = new Intent();
         check.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
         mContext.startActivityForResult(check, SPEECH_CHECK_CODE);
+
+        SharedPreferences.Editor edi = prefs.edit();
+        edi.putInt("check_tts", 1);
+        edi.commit();
     }
 
     private void configureParameters(){
