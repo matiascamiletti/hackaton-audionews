@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.mobileia.audionews.R;
 import com.mobileia.audionews.activity.DetailActivity;
+import com.mobileia.audionews.activity.MainActivity;
 import com.mobileia.audionews.adapter.NewsAdapter;
 import com.mobileia.audionews.library.MCSpeech;
 import com.mobileia.audionews.library.MCSpeechListener;
@@ -84,6 +85,9 @@ public class NewsFragment extends Fragment implements AbsListView.OnItemClickLis
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         LNNews n = mAdapter.getList().get(position);
         DetailActivity.createInstance(getActivity(), n);
+        if(isSpeeching){
+            ((MainActivity)getActivity()).pauseSpeech();
+        }
     }
 
     /**
@@ -103,7 +107,7 @@ public class NewsFragment extends Fragment implements AbsListView.OnItemClickLis
         mSpeech = speech;
 
         if(mPositionSpeech > 0){
-            inactiveNews(mPositionSpeech-1);
+            inactiveNews(mPositionSpeech);
         }
         mPositionSpeech = 0;
         isSpeeching = true;

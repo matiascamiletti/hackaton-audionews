@@ -79,6 +79,13 @@ public class DetailActivity extends BaseSpeechActivity implements MCSpeechListen
         loadNews();
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        isRestart = true;
+        mSpeech.stop();
+    }
+
     private void playSpeech(){
         // Cambiar Floating Button al Pause
         mFloatingButton.setImageResource(R.drawable.ic_pause_circle_outline_white);
@@ -133,6 +140,7 @@ public class DetailActivity extends BaseSpeechActivity implements MCSpeechListen
             @Override
             public void run() {
                 if (isPause ||isRestart) {
+                    mLastUid = UID_TITLE;
                     isRestart = false;
                     return;
                 }
