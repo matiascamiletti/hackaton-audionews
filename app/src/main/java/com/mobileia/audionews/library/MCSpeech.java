@@ -98,21 +98,32 @@ public class MCSpeech implements TextToSpeech.OnInitListener {
     }
 
     public void speak(String text, String uid, MCSpeechListener listener){
+        _speak(text, uid, listener, TextToSpeech.QUEUE_FLUSH);
+    }
+
+    public void speakAdd(String text, String uid, MCSpeechListener listener){
+        _speak(text, uid, listener, TextToSpeech.QUEUE_ADD);
+    }
+
+    private void _speak(String text, String uid, MCSpeechListener listener, int queue){
         if(listener != null){
             mUtteranceListener.setListener(listener);
         }
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
             mTTS.setOnUtteranceProgressListener(mUtteranceListener);
-            mTTS.speak(text, TextToSpeech.QUEUE_ADD, new Bundle(), uid);
+            mTTS.speak(text, queue, new Bundle(), uid);
         } else {
+            mTTS.setOnUtteranceCompletedListener(mUtteranceListener);
             mProperties.remove(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID);
             mProperties.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, uid);
-            mTTS.speak(text, TextToSpeech.QUEUE_ADD, mProperties);
+            mTTS.speak(text, queue, mProperties);
         }
     }
 
     public void stop(){
-        mTTS.stop();
+        if(mTTS != null){
+            mTTS.stop();
+        }
     }
 }

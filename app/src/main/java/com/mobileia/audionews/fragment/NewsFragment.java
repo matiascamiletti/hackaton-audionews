@@ -115,8 +115,8 @@ public class NewsFragment extends Fragment implements AbsListView.OnItemClickLis
     }
 
     public void pauseSpeech(){
-        mSpeech.stop();
         isSpeeching = false;
+        mSpeech.stop();
         inactiveNews(mPositionSpeech);
     }
 
@@ -137,11 +137,11 @@ public class NewsFragment extends Fragment implements AbsListView.OnItemClickLis
 
         final LNNews n = mAdapter.getList().get(mPositionSpeech);
         mSpeech.speak(n.category, String.valueOf(n.identifier) + "b", null);
-        mSpeech.speak(n.title, String.valueOf(n.identifier), new MCSpeechListener() {
+        mSpeech.speakAdd(n.title, String.valueOf(n.identifier), new MCSpeechListener() {
             @Override
             public void onComplete(String utteranceId) {
 
-                if(utteranceId.compareTo(String.valueOf(n.identifier)) != 0 || !isSpeeching){
+                if (utteranceId.compareTo(String.valueOf(n.identifier)) != 0 || !isSpeeching) {
                     return;
                 }
 
