@@ -110,8 +110,8 @@ public class DetailActivity extends BaseSpeechActivity implements MCSpeechListen
         // Cambiar Floating Button al Pause
         mFloatingButton.setImageResource(R.drawable.ic_play_circle_outline_white);
 
-        mSpeech.stop();
         isPause = true;
+        mSpeech.stop();
 
         stickTitle(false);
         stickBajada(false);
@@ -140,7 +140,9 @@ public class DetailActivity extends BaseSpeechActivity implements MCSpeechListen
             @Override
             public void run() {
                 if (isPause || isRestart) {
-                    mLastUid = UID_TITLE;
+                    if(isRestart){
+                        mLastUid = UID_TITLE;
+                    }
                     isRestart = false;
                     return;
                 }
