@@ -6,15 +6,10 @@
     <item android:drawable="@drawable/loadertwo" android:duration="100" />
     <item android:drawable="@drawable/loaderthree" android:duration="100" />
     <item android:drawable="@drawable/loaderfour" android:duration="100" />
-    <item android:drawable="@drawable/loaderfive" android:duration="100" />
     <item android:drawable="@drawable/loadersix" android:duration="100" />
-    <item android:drawable="@drawable/loaderseven" android:duration="100" />
     <item android:drawable="@drawable/loadereight" android:duration="100" />
-    <item android:drawable="@drawable/loadernine" android:duration="100" />
     <item android:drawable="@drawable/loaderten" android:duration="100" />
     <item android:drawable="@drawable/loadereleven" android:duration="100" />
     <item android:drawable="@drawable/loadertwelve" android:duration="100" />
-    <item android:drawable="@drawable/loaderthirteen" android:duration="100" />
     <item android:drawable="@drawable/loaderfourteen" android:duration="100" />
-    <item android:drawable="@drawable/loaderfifteen" android:duration="100" />
 </animation-list>

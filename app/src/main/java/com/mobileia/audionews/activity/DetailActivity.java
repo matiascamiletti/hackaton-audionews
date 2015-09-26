@@ -27,6 +27,7 @@ import android.widget.TextView;
 import com.koushikdutta.ion.Ion;
 import com.mobileia.audionews.Keys;
 import com.mobileia.audionews.R;
+import com.mobileia.audionews.dialog.AuthorDialog;
 import com.mobileia.audionews.dialog.RecorderDialog;
 import com.mobileia.audionews.library.MCSpeech;
 import com.mobileia.audionews.library.MCSpeechListener;
@@ -333,8 +334,11 @@ public class DetailActivity extends BaseSpeechActivity implements MCSpeechListen
                 onBackPressed();
                 return true;
             case R.id.menu_headphone:
-                RecorderDialog dialog = new RecorderDialog(this);
-                dialog.show();
+                if(AuthorDialog.verifyLogin(this)){
+                    new RecorderDialog(this, mNews.identifier).show();
+                }else{
+                    new AuthorDialog(this, mNews.identifier).show();
+                }
                 return true;
         }
 

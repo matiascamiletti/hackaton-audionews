@@ -24,16 +24,16 @@ public class RecorderDialog extends Dialog {
     protected ImageView mImgLoader;
     protected AnimationDrawable mAnimation;
 
+    protected int mIdentifier = 0;
+
     protected Button mBtnSave;
     protected Button mBtnStop;
     protected Button mBtnPlay;
+    protected Button mBtnFile;
 
-    public RecorderDialog(Context context) {
+    public RecorderDialog(Context context, int id) {
         super(context);
-    }
-
-    public RecorderDialog(Context context, int themeResId) {
-        super(context, themeResId);
+        mIdentifier = id;
     }
 
     protected RecorderDialog(Context context, boolean cancelable, OnCancelListener cancelListener) {
@@ -46,9 +46,16 @@ public class RecorderDialog extends Dialog {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         setContentView(R.layout.dialog_recorder);
-        initViews();
 
-        mRecorder = new MCRecorder();
+        mRecorder = new MCRecorder(mIdentifier);
+
+        initViews();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        mRecorder.deleteFile();
     }
 
     private void initViews(){
@@ -75,6 +82,7 @@ public class RecorderDialog extends Dialog {
             public void onClick(View v) {
                 mBtnStop.setVisibility(View.GONE);
                 mBtnPlay.setVisibility(View.VISIBLE);
+                mBtnFile.setVisibility(View.VISIBLE);
 
                 mAnimation.stop();
                 mRecorder.stopRecording();
@@ -86,6 +94,19 @@ public class RecorderDialog extends Dialog {
             @Override
             public void onClick(View v) {
                 mRecorder.startPlaying();
+            }
+        });
+
+        if(mRecorder.existFile()){
+            mBtnPlay.setVisibility(View.VISIBLE);
+            mBtnSave.setText("Grabar y Reemplazar");
+        }
+
+        mBtnFile = (Button)findViewById(R.id.btnFile);
+        mBtnFile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
             }
         });
     }

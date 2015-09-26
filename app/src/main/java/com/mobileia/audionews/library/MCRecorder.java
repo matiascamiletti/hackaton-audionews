@@ -4,6 +4,7 @@ import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Environment;
 
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -17,9 +18,9 @@ public class MCRecorder {
 
     private MediaPlayer mPlayer = null;
 
-    public MCRecorder() {
+    public MCRecorder(int identifier) {
         mFileName = Environment.getExternalStorageDirectory().getAbsolutePath();
-        mFileName += "/lanacion.3gp";
+        mFileName += "/lanacion_"+ identifier +".3gp";
     }
 
     public void startRecording() {
@@ -58,5 +59,15 @@ public class MCRecorder {
     public void stopPlaying() {
         mPlayer.release();
         mPlayer = null;
+    }
+
+    public boolean existFile(){
+        File file = new File(mFileName);
+        return file.exists();
+    }
+
+    public void deleteFile(){
+        File file = new File(mFileName);
+        file.delete();
     }
 }

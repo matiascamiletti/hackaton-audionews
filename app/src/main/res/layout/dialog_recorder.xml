@@ -12,7 +12,7 @@
     <android.support.v7.widget.CardView
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         card_view:cardCornerRadius="10dp"
         android:background="@android:color/white"
         card_view:cardBackgroundColor="@android:color/white">
@@ -57,6 +57,8 @@
                 android:layout_height="44dp"
                 android:text="Grabar"
                 android:layout_below="@+id/recorderAnimation"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/background_button_audio_bar"
                 />
 
             <Button
@@ -66,6 +68,8 @@
                 android:text="Detener"
                 android:layout_below="@+id/btnSave"
                 android:visibility="gone"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/background_button_audio_bar"
                 />
 
             <Button
@@ -75,6 +79,19 @@
                 android:text="Reproducir"
                 android:layout_below="@+id/btnDetener"
                 android:visibility="gone"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/background_button_audio_bar"
+                />
+
+            <Button
+                android:id="@+id/btnFile"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:text="Guardar"
+                android:layout_below="@+id/btnPlay"
+                android:visibility="gone"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/background_button_audio_bar"
                 />
 
         </RelativeLayout>
