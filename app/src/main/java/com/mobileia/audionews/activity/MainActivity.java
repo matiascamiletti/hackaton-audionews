@@ -169,7 +169,10 @@ public class MainActivity extends BaseSpeechActivity {
         getFragment().prevNews();
     }
 
-    public void restartSpeech(View v){ getFragment().startSpeech(mSpeech); }
+    public void restartSpeech(View v){
+        getFragment().pauseSpeech();
+        getFragment().startSpeech(mSpeech);
+    }
 
 
     @Override
