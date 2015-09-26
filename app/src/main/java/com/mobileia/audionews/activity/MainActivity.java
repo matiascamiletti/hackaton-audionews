@@ -14,6 +14,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -174,6 +175,18 @@ public class MainActivity extends BaseSpeechActivity {
         getFragment().startSpeech(mSpeech);
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        switch(keyCode){
+            case KeyEvent.KEYCODE_VOLUME_UP:
+                getFragment().openDetailCurrent();
+                return true;
+            case KeyEvent.KEYCODE_VOLUME_DOWN:
+                pauseSpeech();
+                return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) { return true; }

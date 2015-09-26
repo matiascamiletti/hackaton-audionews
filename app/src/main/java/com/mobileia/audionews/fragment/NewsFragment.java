@@ -83,11 +83,19 @@ public class NewsFragment extends Fragment implements AbsListView.OnItemClickLis
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        openDetail(position);
+    }
+
+    public void openDetail(int position){
         LNNews n = mAdapter.getList().get(position);
         DetailActivity.createInstance(getActivity(), n);
         if(isSpeeching){
             ((MainActivity)getActivity()).pauseSpeech();
         }
+    }
+
+    public void openDetailCurrent(){
+        openDetail(mPositionSpeech);
     }
 
     /**
