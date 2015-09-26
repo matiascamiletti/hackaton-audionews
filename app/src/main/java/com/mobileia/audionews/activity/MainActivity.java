@@ -17,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
@@ -130,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initAudioBar(){
+        // Configuración de la posicion del Audio Bar
         mAudioBar = (RelativeLayout)findViewById(R.id.containerAudioBar);
         Point size = new Point();
         getWindowManager().getDefaultDisplay().getSize(size);
@@ -139,8 +141,18 @@ public class MainActivity extends AppCompatActivity {
         //progressBar.getProgressDrawable().setColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY);
     }
 
-    public void startAllSpeech(){
+    private void hideAudioBar(){
+        Point size = new Point();
+        getWindowManager().getDefaultDisplay().getSize(size);
+        mAudioBar.animate().x(size.x);
+    }
+
+    private void showAudioBar(){
         mAudioBar.animate().x(0);
+    }
+
+    public void startAllSpeech(){
+        showAudioBar();
 
         Fragment f = getSupportFragmentManager().findFragmentById(R.id.container);
         if(NewsFragment.class.isInstance(f)){
@@ -152,8 +164,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void pauseSpeech(){
-        mSpeech.stop();
         getFragment().pauseSpeech();
+
+        hideAudioBar();
 
         // Cambiar Floating Button al Play
         mFloatingButton.setImageResource(R.drawable.ic_play_circle_outline_white);
@@ -162,8 +175,18 @@ public class MainActivity extends AppCompatActivity {
     public void resumeSpeech(){
         getFragment().resumeSpeech();
 
+        showAudioBar();
+
         // Cambiar Floating Button al Pause
         mFloatingButton.setImageResource(R.drawable.ic_pause_circle_outline_white);
+    }
+
+    public void nextSpeech(View v){
+        getFragment().nextNews();
+    }
+
+    public void prevSpeech(View v){
+        getFragment().prevNews();
     }
 
     private void initTextToSpeech(){

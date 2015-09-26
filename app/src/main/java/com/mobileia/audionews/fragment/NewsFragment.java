@@ -53,7 +53,11 @@ public class NewsFragment extends Fragment implements AbsListView.OnItemClickLis
      */
     private NewsAdapter mAdapter;
 
+    protected MCSpeech mSpeech;
+
     private int mPositionSpeech = 0;
+
+    private boolean isSpeeching = false;
 
     // TODO: Rename and change types of parameters
     public static NewsFragment newInstance(String param1, String param2) {
@@ -150,28 +154,44 @@ public class NewsFragment extends Fragment implements AbsListView.OnItemClickLis
     }
 
     public void startSpeech(MCSpeech speech){
+        mSpeech = speech;
+
         if(mPositionSpeech > 0){
-            LNNews old = mAdapter.getList().get(mPositionSpeech-1);
-            old.isSpeeching = false;
+            inactiveNews(mPositionSpeech-1);
         }
         mPositionSpeech = 0;
-        nextSpeech(speech);
+        isSpeeching = true;
+        nextSpeech();
     }
 
-    private void nextSpeech(final MCSpeech speech){
+    public void pauseSpeech(){
+        mSpeech.stop();
+        isSpeeching = false;
+        inactiveNews(mPositionSpeech);
+    }
+
+    public void resumeSpeech(){
+        isSpeeching = true;
+        nextSpeech();
+    }
+
+    public void nextSpeech(){
         if(mPositionSpeech > 0){
-            LNNews old = mAdapter.getList().get(mPositionSpeech-1);
-            old.isSpeeching = false;
-            updateItemAtPosition(mPositionSpeech-1);
+            inactiveNews(mPositionSpeech-1);
+        }
+
+        if(mAdapter.getList().size() <= mPositionSpeech){
+            pauseSpeech();
+            return;
         }
 
         final LNNews n = mAdapter.getList().get(mPositionSpeech);
-        speech.speak(n.category, String.valueOf(n.identifier) + "b", null);
-        speech.speak(n.title, String.valueOf(n.identifier), new MCSpeechListener() {
+        mSpeech.speak(n.category, String.valueOf(n.identifier) + "b", null);
+        mSpeech.speak(n.title, String.valueOf(n.identifier), new MCSpeechListener() {
             @Override
             public void onComplete(String utteranceId) {
 
-                if(utteranceId.compareTo(String.valueOf(n.identifier)) != 0){
+                if(utteranceId.compareTo(String.valueOf(n.identifier)) != 0 || !isSpeeching){
                     return;
                 }
 
@@ -179,7 +199,7 @@ public class NewsFragment extends Fragment implements AbsListView.OnItemClickLis
                     @Override
                     public void run() {
                         mPositionSpeech++;
-                        nextSpeech(speech);
+                        nextSpeech();
                     }
                 });
 
@@ -190,6 +210,27 @@ public class NewsFragment extends Fragment implements AbsListView.OnItemClickLis
         updateItemAtPosition(mPositionSpeech);
     }
 
+    public void nextNews(){
+        pauseSpeech();
+        mPositionSpeech++;
+        nextSpeech();
+    }
+
+    public void prevNews(){
+        pauseSpeech();
+
+        if(mPositionSpeech > 0){
+            mPositionSpeech--;
+        }
+
+        nextSpeech();
+    }
+
+    private void inactiveNews(int position){
+        LNNews old = mAdapter.getList().get(position);
+        old.isSpeeching = false;
+        updateItemAtPosition(position);
+    }
 
     private void updateItemAtPosition(int position) {
         int visiblePosition = mListView.getFirstVisiblePosition();
