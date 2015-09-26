@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/containerAudioBar"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:background="@color/colorAccent">
+
+    <ImageButton
+        android:id="@+id/btnRestart"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:src="@drawable/ic_loop_white"
+        android:scaleType="centerInside"
+        android:layout_alignParentLeft="true"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/background_button_audio_bar"
+        />
+
+    <ImageButton
+        android:id="@+id/btnPrev"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:src="@drawable/ic_fast_rewind_white"
+        android:scaleType="centerInside"
+        android:layout_toLeftOf="@+id/btnPlayPause"
+        android:layout_centerInParent="true"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/background_button_audio_bar"/>
+
+    <ProgressBar
+        android:id="@+id/btnPlayPause"
+        android:layout_width="60dp"
+        android:layout_height="44dp"
+        android:layout_centerInParent="true"
+        android:progressDrawable="@drawable/progress_bar"/>
+
+    <ImageButton
+        android:id="@+id/btnNext"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:src="@drawable/ic_fast_forward_white"
+        android:scaleType="centerInside"
+        android:layout_toRightOf="@+id/btnPlayPause"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="20dp"
+        android:background="@drawable/background_button_audio_bar"/>
+
+</RelativeLayout>

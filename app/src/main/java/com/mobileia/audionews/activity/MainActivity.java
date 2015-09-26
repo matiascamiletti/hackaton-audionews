@@ -2,6 +2,9 @@ package com.mobileia.audionews.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Point;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -14,6 +17,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 
 import com.mobileia.audionews.R;
 import com.mobileia.audionews.fragment.NewsFragment;
@@ -32,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
 
     protected MCSpeech mSpeech;
 
+    protected RelativeLayout mAudioBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         initToolbar();
         initFloatingButton();
         initTextToSpeech();
+        initAudioBar();
     }
 
     @Override
@@ -63,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     //case R.id.menu_stats:
 
-                        //break;
+                    //break;
                 }
 
                 return false;
@@ -105,7 +113,19 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void initAudioBar(){
+        mAudioBar = (RelativeLayout)findViewById(R.id.containerAudioBar);
+        Point size = new Point();
+        getWindowManager().getDefaultDisplay().getSize(size);
+        mAudioBar.setX(size.x);
+
+        ProgressBar progressBar = (ProgressBar)findViewById(R.id.btnPlayPause);
+        //progressBar.getProgressDrawable().setColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY);
+    }
+
     public void startAllSpeech(){
+        mAudioBar.animate().x(0);
+
         Fragment f = getSupportFragmentManager().findFragmentById(R.id.container);
         if(NewsFragment.class.isInstance(f)){
             ((NewsFragment)f).startSpeech(mSpeech);

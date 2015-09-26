@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/info_image"
                 android:text="Categoría"
-                android:textSize="22sp"
+                android:textSize="20sp"
                 android:textColor="@color/lnCategory"
                 android:textStyle="bold" />
 
@@ -48,7 +48,7 @@
                 android:layout_below="@+id/info_category"
                 android:layout_toRightOf="@+id/info_image"
                 android:text="Titulo de la noticia que se estara reproduciendo."
-                android:textSize="20sp"/>
+                android:textSize="18sp"/>
 
         </RelativeLayout>
     </android.support.v7.widget.CardView>
