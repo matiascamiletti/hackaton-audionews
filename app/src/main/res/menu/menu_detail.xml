@@ -4,6 +4,14 @@
     tools:context="com.mobileia.audionews.activity.DetailActivity">
 
     <item
+        android:id="@+id/menu_share"
+        android:title="Compartir"
+        android:orderInCategory="99"
+        app:showAsAction="always"
+        android:icon="@android:drawable/ic_menu_share"
+        />
+
+    <item
         android:id="@+id/menu_headphone"
         android:title="@string/action_headphone"
         android:orderInCategory="100"

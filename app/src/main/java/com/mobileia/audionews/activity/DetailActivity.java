@@ -139,7 +139,7 @@ public class DetailActivity extends BaseSpeechActivity implements MCSpeechListen
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (isPause ||isRestart) {
+                if (isPause || isRestart) {
                     mLastUid = UID_TITLE;
                     isRestart = false;
                     return;
@@ -323,7 +323,7 @@ public class DetailActivity extends BaseSpeechActivity implements MCSpeechListen
         btnRestart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isSpeeching){
+                if (isSpeeching) {
                     isRestart = true;
                 }
                 playSpeech();
@@ -348,9 +348,20 @@ public class DetailActivity extends BaseSpeechActivity implements MCSpeechListen
                     new AuthorDialog(this, mNews.identifier).show();
                 }
                 return true;
+            case R.id.menu_share:
+                share();
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void share(){
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, "http://www.lanacion.com.ar/" + mNews.identifier);
+        sendIntent.setType("text/plain");
+        startActivity(sendIntent);
     }
 
 }
