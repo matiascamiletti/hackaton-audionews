@@ -3,12 +3,32 @@
     <group android:id="@+id/group_one" android:checkableBehavior="all">
         <item
             android:id="@+id/menu_home"
-            android:icon="@android:drawable/ic_lock_idle_lock"
-            android:title="Inicio"
+            android:title="ULTIMAS NOTICIAS"
+            android:checked="true"
             />
         <item
-            android:id="@+id/menu_stats"
-            android:icon="@android:drawable/ic_media_next"
-            android:title="Seciones" />
+            android:id="@+id/menu_section_one"
+            android:title="POLITICA" />
+        <item
+            android:id="@+id/menu_section_two"
+            android:title="ECONOMIA" />
+        <item
+            android:id="@+id/menu_section_three"
+            android:title="SOCIEDAD" />
+        <item
+            android:id="@+id/menu_section_four"
+            android:title="SEGURIDAD" />
+        <item
+            android:id="@+id/menu_section_five"
+            android:title="EL MUNDO" />
+        <item
+            android:id="@+id/menu_section_six"
+            android:title="BUENOS AIRES" />
+        <item
+            android:id="@+id/menu_section_seven"
+            android:title="OPINIÓN" />
+        <item
+            android:id="@+id/menu_section_eight"
+            android:title="TECNOLOGÍA" />
     </group>
 </menu>

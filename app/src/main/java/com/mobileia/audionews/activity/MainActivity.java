@@ -61,9 +61,9 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.menu_home:
                         //HomeActivity.createInstance(this);
                         break;
-                    case R.id.menu_stats:
+                    //case R.id.menu_stats:
 
-                        break;
+                        //break;
                 }
 
                 return false;
