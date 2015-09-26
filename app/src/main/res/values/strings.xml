@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">AudioNews</string>
     <string name="action_settings">Settings</string>
+    <string name="action_headphone">Grabar</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_detail">DetailActivity</string>
     <string name="large_text">

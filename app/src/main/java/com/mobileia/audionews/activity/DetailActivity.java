@@ -27,6 +27,7 @@ import android.widget.TextView;
 import com.koushikdutta.ion.Ion;
 import com.mobileia.audionews.Keys;
 import com.mobileia.audionews.R;
+import com.mobileia.audionews.dialog.RecorderDialog;
 import com.mobileia.audionews.library.MCSpeech;
 import com.mobileia.audionews.library.MCSpeechListener;
 import com.mobileia.audionews.library.MCUtteranceListener;
@@ -322,10 +323,21 @@ public class DetailActivity extends BaseSpeechActivity implements MCSpeechListen
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) { return true; }
+    public boolean onCreateOptionsMenu(Menu menu) { getMenuInflater().inflate(R.menu.menu_detail, menu); return true; }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        onBackPressed();
+        int id = item.getItemId();
+
+        switch (id) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            case R.id.menu_headphone:
+                RecorderDialog dialog = new RecorderDialog(this);
+                dialog.show();
+                return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 

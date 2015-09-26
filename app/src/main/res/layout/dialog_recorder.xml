@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="60dp"
+    android:layout_marginLeft="30dp"
+    android:layout_marginRight="30dp"
+    android:layout_marginBottom="60dp"
+    android:background="@null">
+
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        card_view:cardCornerRadius="10dp"
+        android:background="@android:color/white"
+        card_view:cardBackgroundColor="@android:color/white">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="20dp">
+
+            <TextView
+                android:id="@+id/recorderTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nota de Audio"
+                android:textSize="24sp"
+                android:textColor="@color/colorAccent"
+                android:textAlignment="center"/>
+
+            <TextView
+                android:id="@+id/recorderCaption"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/recorderTitle"
+                android:layout_marginTop="15dp"
+                android:textSize="20sp"
+                android:text="Esta nota estara disponible como adicional para todos los lectores."/>
+
+
+            <ImageView
+                android:id="@+id/recorderAnimation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/loader_recorder"
+                android:layout_below="@+id/recorderCaption"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"/>
+
+            <Button
+                android:id="@+id/btnSave"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:text="Grabar"
+                android:layout_below="@+id/recorderAnimation"
+                />
+
+            <Button
+                android:id="@+id/btnDetener"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:text="Detener"
+                android:layout_below="@+id/btnSave"
+                android:visibility="gone"
+                />
+
+            <Button
+                android:id="@+id/btnPlay"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:text="Reproducir"
+                android:layout_below="@+id/btnDetener"
+                android:visibility="gone"
+                />
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>
