@@ -27,8 +27,8 @@ public class BaseSpeechActivity extends AppCompatActivity {
 
     @Override
     protected void onPause() {
-        super.onPause();
         mSpeech.stop();
+        super.onPause();
     }
 
     @Override

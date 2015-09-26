@@ -20,7 +20,7 @@
             android:id="@+id/info_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Titulo de la nota"
+            android:text="Cargando..."
             android:textSize="22sp"
             android:textColor="@color/colorAccent"/>
 
@@ -28,7 +28,7 @@
             android:id="@+id/info_bajada"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Titulo de la nota"
+            android:text="Cargando..."
             android:textSize="20sp"
             android:textColor="@android:color/darker_gray"
             android:layout_marginTop="10dp"

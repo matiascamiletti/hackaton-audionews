@@ -64,7 +64,10 @@ public class LNParser {
             JsonArray values = object.get("contenido").getAsJsonArray();
             for (int i = 0; i < values.size(); i++) {
                 JsonObject tag = values.get(i).getAsJsonObject();
-                news.content.add(parserTagToString(tag));
+                String cadena = parserTagToString(tag);
+                if(cadena.length() > 0){
+                    news.content.add(cadena);
+                }
             }
         }
 

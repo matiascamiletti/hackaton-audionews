@@ -110,7 +110,7 @@ public class MainActivity extends BaseSpeechActivity {
 
     private void initFragment(Bundle savedInstanceState){
         if (savedInstanceState == null) {
-            NewsFragment f = NewsFragment.newInstance("", "");
+            NewsFragment f = NewsFragment.newInstance();
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, f)
                     .commit();
