@@ -35,9 +35,15 @@ public class MainActivity extends AppCompatActivity {
 
     protected NavigationView mNavigationView;
 
+    protected FloatingActionButton mFloatingButton;
+
     protected MCSpeech mSpeech;
 
     protected RelativeLayout mAudioBar;
+
+    protected boolean isSpeeching = false;
+
+    protected boolean isPause = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,11 +99,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initFloatingButton(){
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        mFloatingButton = (FloatingActionButton) findViewById(R.id.fab);
+        mFloatingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startAllSpeech();
+                if (!isSpeeching && !isPause) {
+                    startAllSpeech();
+                } else if (isPause) {
+                    resumeSpeech();
+                    isPause = false;
+                } else {
+                    pauseSpeech();
+                    isPause = true;
+                }
+                isSpeeching = !isSpeeching;
+
                 //mSpeech.speak("Probando la aplicacion, por favor funciona loca!");
                 //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
             }
@@ -130,6 +146,24 @@ public class MainActivity extends AppCompatActivity {
         if(NewsFragment.class.isInstance(f)){
             ((NewsFragment)f).startSpeech(mSpeech);
         }
+
+        // Cambiar Floating Button al Pause
+        mFloatingButton.setImageResource(R.drawable.ic_pause_circle_outline_white);
+    }
+
+    public void pauseSpeech(){
+        mSpeech.stop();
+        getFragment().pauseSpeech();
+
+        // Cambiar Floating Button al Play
+        mFloatingButton.setImageResource(R.drawable.ic_play_circle_outline_white);
+    }
+
+    public void resumeSpeech(){
+        getFragment().resumeSpeech();
+
+        // Cambiar Floating Button al Pause
+        mFloatingButton.setImageResource(R.drawable.ic_pause_circle_outline_white);
     }
 
     private void initTextToSpeech(){
@@ -158,6 +192,15 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public NewsFragment getFragment(){
+        Fragment f = getSupportFragmentManager().findFragmentById(R.id.container);
+        if(NewsFragment.class.isInstance(f)){
+            return ((NewsFragment)f);
+        }
+
+        return null;
     }
 
 }
