@@ -59,14 +59,7 @@ public class MainActivity extends BaseSpeechActivity {
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
-                switch (menuItem.getItemId()) {
-                    case R.id.menu_home:
-                        //HomeActivity.createInstance(this);
-                        break;
-                    //case R.id.menu_stats:
-
-                    //break;
-                }
+                mDrawerLayout.closeDrawers();
 
                 return false;
             }
