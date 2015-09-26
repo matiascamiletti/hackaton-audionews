@@ -25,7 +25,7 @@ import com.mobileia.audionews.R;
 import com.mobileia.audionews.fragment.NewsFragment;
 import com.mobileia.audionews.library.MCSpeech;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseSpeechActivity {
 
     public static void createInstance(Activity activity) {
         Intent intent = new Intent(activity, MainActivity.class);
@@ -38,13 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
     protected FloatingActionButton mFloatingButton;
 
-    protected MCSpeech mSpeech;
-
     protected RelativeLayout mAudioBar;
-
-    protected boolean isSpeeching = false;
-
-    protected boolean isPause = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,14 +49,7 @@ public class MainActivity extends AppCompatActivity {
         initNavigationView();
         initToolbar();
         initFloatingButton();
-        initTextToSpeech();
         initAudioBar();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        mSpeech.stop();
     }
 
     private void initNavigationView(){
@@ -189,18 +176,8 @@ public class MainActivity extends AppCompatActivity {
         getFragment().prevNews();
     }
 
-    private void initTextToSpeech(){
-        mSpeech = new MCSpeech();
-        mSpeech.init(this);
-    }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(mSpeech != null){
-            mSpeech.onActivityResult(requestCode, resultCode, data);
-        }
-    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) { return true; }

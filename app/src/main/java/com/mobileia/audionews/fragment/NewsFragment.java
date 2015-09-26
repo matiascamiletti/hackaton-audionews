@@ -11,6 +11,7 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.mobileia.audionews.R;
+import com.mobileia.audionews.activity.DetailActivity;
 import com.mobileia.audionews.adapter.NewsAdapter;
 import com.mobileia.audionews.library.MCSpeech;
 import com.mobileia.audionews.library.MCSpeechListener;
@@ -118,11 +119,8 @@ public class NewsFragment extends Fragment implements AbsListView.OnItemClickLis
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (null != mListener) {
-            // Notify the active callbacks interface (the activity, if the
-            // fragment is attached to one) that an item has been selected.
-            //mListener.onFragmentInteraction(DummyContent.ITEMS.get(position).id);
-        }
+        LNNews n = mAdapter.getList().get(position);
+        DetailActivity.createInstance(getActivity(), n);
     }
 
     /**
@@ -213,6 +211,7 @@ public class NewsFragment extends Fragment implements AbsListView.OnItemClickLis
     public void nextNews(){
         pauseSpeech();
         mPositionSpeech++;
+        isSpeeching = true;
         nextSpeech();
     }
 
@@ -223,6 +222,7 @@ public class NewsFragment extends Fragment implements AbsListView.OnItemClickLis
             mPositionSpeech--;
         }
 
+        isSpeeching = true;
         nextSpeech();
     }
 

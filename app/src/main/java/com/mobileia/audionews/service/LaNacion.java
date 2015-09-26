@@ -9,6 +9,7 @@ import com.koushikdutta.ion.Ion;
 import com.mobileia.audionews.model.LNNews;
 import com.mobileia.audionews.parser.LNParser;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -36,11 +37,25 @@ public class LaNacion {
             });
     }
 
-    public static JsonObject getNews(Context context, int identifier) throws ExecutionException, InterruptedException {
-        return Ion.with(context)
+    public static void getNews(final Context context, int identifier, final ServiceListener listener){
+        Ion.with(context)
                 .load("http://contenidos.lanacion.com.ar/json/nota/" + identifier)
                 .asJsonObject()
-                .get();
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        // do stuff with the result or error
+                        if(e != null || result == null){
+                            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
+                        LNParser parser = new LNParser(context);
+                        List<LNNews> list = new ArrayList<LNNews>();
+                        list.add(parser.detailNews(result));
+                        listener.onComplete(list);
+                    }
+                });
     }
 
 }
