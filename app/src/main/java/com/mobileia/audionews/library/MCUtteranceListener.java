@@ -16,10 +16,6 @@ public class MCUtteranceListener extends UtteranceProgressListener implements Te
     private MCSpeechListener mListener = null;
 
     public void onEnd(String utteranceId){
-        //if (utteranceId == "END_ID") {
-            // Callback ya termino de hablar el texto ingresado.
-        //}
-        //Toast.makeText(mContext, "Ya termino de reproducir.", Toast.LENGTH_SHORT).show();
         if(mListener != null){
             mListener.onComplete(utteranceId);
         }
